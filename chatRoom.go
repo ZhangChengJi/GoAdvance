@@ -170,12 +170,14 @@ func HandlerConnect(conn net.Conn) {
 	for {
 		select {
 		case <-isQuit:
+			close(clnt.C)
 			delete(onlineMap, netAddr)         //将用户从onlineMap移除
 			message <- MakeMsg(clnt, "logout") //写入用户退出到全局channel
 			return
 		case <-hasData:
 			//什么都不做，目的是重制下面case的计时器
 		case <-time.After(time.Second * 60): //超时退出
+			close(clnt.C)
 			delete(onlineMap, netAddr)
 			message <- MakeMsg(clnt, "time out leaved")
 			return

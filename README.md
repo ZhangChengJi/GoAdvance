@@ -3,24 +3,34 @@
 
 ![1630332283731](./1630332283731.jpg)
 
-聊天室模块划分：
+### 聊天室模块划分
+
 主go程：
+
 创建监听socket。for循环Accept0客户端连接-conn。启动go程HandlerConnect：
 
 HandlerConnect:
+
 创建用户结构体对象。存入onlineMap。发送用户登录广播、聊天消息。处理查询在线用户、改名、下线、超时提出，
 
 Manager:
+
 监听全局channel message，将读到的消息广播给onlineMap中的所有用户。
 
 WriteMsgToClient:
+
 读取每个用户自带channelC上消息（由Manager发送该消息）。回写给用户。
 
 全局数据模块：
+
 用户结构体：Client{C、Name. Addr string}
 在现用户列表：onlineMap【string】Client key：客户端IP+port value： Client
 
-消息通道：message
+消息通道：
+
+message
+
+### 功能和实现
 
 ```
 
